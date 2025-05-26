@@ -53,10 +53,6 @@ jobs:
         with:
           repository: ${{ inputs.repository }}
           ref: ${{ inputs.ref }}
-          sparse-checkout: |
-            common.sh
-            configure-conda.sh
-            install-and-set-up-conda.sh
 
       - name: Check files exist
         if: steps.lookup-cache.outputs.cache-hit != 'true'
