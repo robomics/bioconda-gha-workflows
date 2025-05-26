@@ -3,7 +3,7 @@ name: Keep the cache entry for the conda install scripts up-to-date
 on:
   schedule:
     # Run daily at 23:00 (1h before nightly.yml)
-    - cron: "0 23 * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
     inputs:
       ref:
