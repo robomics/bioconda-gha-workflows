@@ -1,0 +1,34 @@
+name: test-workflow.yml
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/*.yml"]
+jobs:
+  cache-bioconda-common-scripts:
+    name: Cache bioconda/bioconda-common scripts
+    uses: robomics/bioconda-gha-workflows/.github/workflows/fetch-conda-install-script.yml@main
+    with:
+      ref: c7f3f523b39481225f912cbfc3937682b4342c4e
+  test-cache:
+    runs-on: ubuntu-latest
+    needs: [cache-bioconda-common-scripts]
+    steps:
+      - name: Fetch conda install scripts
+        uses: actions/cache/restore@v4
+        with:
+          key: ${{ needs.cache-bioconda-common-scripts.outputs.cache-key }}
+          path: |
+            common.sh
+            configure-conda.sh
+            install-and-set-up-conda.sh
+          fail-on-cache-miss: true
+
+      - name: Test
+        run: |
+          cat << EOF > checksums.sha256
+          9e6ffd346a4e65ee6a11a92c7aaf0271c4d24ff0fbdbae9f58c091de9873bcc7  common.sh
+          1fc0d2b748f6417aa587ca10cacf3c55e9f3d8528bfe857eb1dc054bebce20fd  configure-conda.sh
+          af1816d0dbae785347100f80ccec3e95c0ab2e7d5f2014f458d857c9bfc35cd5  install-and-set-up-conda.sh
+          EOF
+
+          sha256sum -c checksums.sha256
