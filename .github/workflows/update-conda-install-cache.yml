@@ -21,7 +21,7 @@ jobs:
 
   cache-bioconda-common-scripts-manual:
     name: Cache bioconda/bioconda-common scripts (manual)
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'schedule'
     uses: robomics/bioconda-gha-workflows/.github/workflows/fetch-conda-install-script.yml@main
     with:
       ref: ${{ inputs.ref }}
