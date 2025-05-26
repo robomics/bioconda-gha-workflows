@@ -53,12 +53,16 @@ jobs:
         with:
           repository: ${{ inputs.repository }}
           ref: ${{ inputs.ref }}
+          sparse-checkout: |
+            common.sh
+            configure-conda.sh
+            install-and-set-up-conda.sh
 
       - name: Check files exist
         if: steps.lookup-cache.outputs.cache-hit != 'true'
         run: |
           ok=true
-          for f in common.sh configure-conda.sh install-and-setup-conda.sh; do
+          for f in common.sh configure-conda.sh install-and-set-up-conda.sh; do
             if [ ! -f "$f" ]; then
               1>&2 echo "File \"$f\" is missing!"
               ok=false
