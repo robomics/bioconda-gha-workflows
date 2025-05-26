@@ -14,14 +14,14 @@ on:
 jobs:
   cache-bioconda-common-scripts-schedule:
     name: Cache bioconda/bioconda-common scripts (schedule)
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'schedule'
     uses: robomics/bioconda-gha-workflows/.github/workflows/fetch-conda-install-script.yml@main
     with:
       ref: c7f3f523b39481225f912cbfc3937682b4342c4e
 
   cache-bioconda-common-scripts-manual:
     name: Cache bioconda/bioconda-common scripts (manual)
-    if: github.event_name == 'schedule'
+    if: github.event_name == 'workflow_dispatch'
     uses: robomics/bioconda-gha-workflows/.github/workflows/fetch-conda-install-script.yml@main
     with:
       ref: ${{ inputs.ref }}
