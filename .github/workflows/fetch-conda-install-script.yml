@@ -67,3 +67,4 @@ jobs:
             common.sh
             configure-conda.sh
             install-and-set-up-conda.sh
+            foobar
